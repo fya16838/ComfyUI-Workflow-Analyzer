@@ -9,7 +9,7 @@ Inspired by [comfyai.run/workflow](https://comfyai.run/workflow).
 ## Features / 功能
 
 - 🔍 **Floating button** — freely draggable, position saved | 悬浮按钮，可自由拖拽
-- 🖱️ **Right-click menu** — right-click any node or canvas to analyze | 右键菜单分析
+- 🖱️ **Right-click menu** — right-click any node or canvas to analyze | 右键菜单分析---暂未添加
 - 📂 **Drag & drop** — drop a `.json` workflow file into the dialog | 拖入工作流文件
 - 🧠 **Smart parsing** — 28K+ node types from ComfyUI-Manager DB | 智能解析 28K+ 节点
 - ⬇️ **One-click install** — via ComfyUI-Manager (individual or batch) | 一键安装
