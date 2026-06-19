@@ -89,6 +89,13 @@ try:
     from aiohttp import web
     import aiohttp
 
+    def _server_url(path=""):
+        """Build URL pointing to this ComfyUI server — never hardcode 127.0.0.1."""
+        addr = getattr(PromptServer.instance, "address", "127.0.0.1")
+        if addr == "0.0.0.0":
+            addr = "127.0.0.1"
+        return f"http://{addr}:{PromptServer.instance.port}{path}"
+
     routes = PromptServer.instance.routes
 
     _LANG_DIR = Path(__file__).parent / "Language"
@@ -129,7 +136,7 @@ try:
         Returns: {"installed": ["RepoName1", "RepoName2", ...]}
         """
         try:
-            cm_url = f"http://127.0.0.1:{PromptServer.instance.port}/customnode/installed"
+            cm_url = _server_url("/customnode/installed")
             conn = _get_connector()
             async with aiohttp.ClientSession(connector=conn) as session:
                 async with session.get(cm_url) as resp:
@@ -241,7 +248,7 @@ try:
         if not all_files or cache.get("date") != today:
             try:
                 port = PromptServer.instance.port
-                url = f"http://127.0.0.1:{port}/wf-analyzer/list-models?category={folder_type}"
+                url = _server_url(f"/wf-analyzer/list-models?category={folder_type}")
                 import aiohttp
                 # Use a new event loop for sync context
                 loop = asyncio.new_event_loop()
@@ -378,7 +385,7 @@ try:
         
         try:
             port = PromptServer.instance.port
-            url = f"http://127.0.0.1:{port}/models/{category}"
+            url = _server_url(f"/models/{category}")
             async with aiohttp.ClientSession() as sess:
                 async with sess.get(url, timeout=aiohttp.ClientTimeout(total=30)) as resp:
                     if resp.status == 200:
@@ -420,7 +427,7 @@ try:
                 cats_to_scan = [c for c in _MODEL_CATEGORIES if not selected or c in selected]
                 for cat in cats_to_scan:
                     try:
-                        async with sess.get(f"http://127.0.0.1:{port}/models/{cat}", timeout=aiohttp.ClientTimeout(total=60)) as r:
+                        async with sess.get(_server_url(f"/models/{cat}"), timeout=aiohttp.ClientTimeout(total=60)) as r:
                             if r.status == 200:
                                 files = await r.json()
                                 files = [f.replace("\\", "/") for f in files]
@@ -550,7 +557,7 @@ try:
 
             # Source 1: ComfyUI-Manager CNR versions
             try:
-                cm_url = f"http://127.0.0.1:{PromptServer.instance.port}/customnode/versions/{repo_name}"
+                cm_url = _server_url(f"/customnode/versions/{repo_name}")
                 async with aiohttp.ClientSession() as session:
                     async with session.get(cm_url, timeout=aiohttp.ClientTimeout(total=10)) as resp:
                         if resp.status == 200:
