@@ -92,6 +92,8 @@
   "modelManualSelect": "手动选择:",
   "modelRescan": "🔄 重新扫描全部模型",
   "modelRescanning": "⏳ 正在扫描模型...",
+  "modelRescanDone": "✅ 已扫描 {cat} 个类别，{files} 个文件",
   "modelApplyDone": "✅ 已更新画布中 {count} 个节点",
+  "modelApplying": "⏳ 正在应用...",
   "modelUpdateBtn": "📝 更新模型路径"
 }

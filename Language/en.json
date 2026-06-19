@@ -92,6 +92,8 @@
   "modelManualSelect": "Manual Select:",
   "modelRescan": "🔄 Rescan All Models",
   "modelRescanning": "⏳ Scanning models...",
+  "modelRescanDone": "✅ Scanned {cat} categories, {files} files",
   "modelApplyDone": "✅ Updated {count} nodes on canvas",
+  "modelApplying": "⏳ Applying...",
   "modelUpdateBtn": "📝 Update Model Paths"
 }
